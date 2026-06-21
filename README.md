@@ -2,6 +2,6 @@
 
 ## Exercises
 
-- [1.1](https://github.com/ruhulshell/KubernetesSubmissions/releases/tag/1.1) - log_output
+- [1.1](https://github.com/ruhulshell/KubernetesSubmissions/tree/main/log_output) - log_output
 
 
