@@ -15,3 +15,6 @@ spec:
       containers:
         - name: todoapp
           image: ruhulaminjr/todoapp
+          env:
+            - name: PORT
+              value: "6060"
