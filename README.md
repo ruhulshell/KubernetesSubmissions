@@ -12,6 +12,10 @@
 
 - [1.5](https://github.com/ruhulshell/KubernetesSubmissions/tree/1.5/todo_app) - todo_app
 
+- [1.6](https://github.com/ruhulshell/KubernetesSubmissions/tree/1.6/todo_app) - todo_app
+
+
+
 
 
 
