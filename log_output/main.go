@@ -1,28 +1,58 @@
 package main
 
 import (
+	"context"
 	"crypto/rand"
 	"fmt"
 	"log"
+	"net/http"
+	"sync"
 	"time"
+)
+
+var (
+	randomStrLog string
 )
 
 func main() {
 	randomStr := generateUUID()
+	ctx, cancel := context.WithCancel(context.Background())
 
-	logOutput(randomStr)
+	var wg sync.WaitGroup
+	wg.Add(1)
 
-	ticker := time.NewTicker(5 * time.Second)
-	defer ticker.Stop()
+	go logOutput(randomStr, ctx, &wg)
 
-	for range ticker.C {
-		logOutput(randomStr)
+	http.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
+
+		w.Write([]byte(randomStrLog))
+
+	})
+
+	errr := http.ListenAndServe(":3070", nil)
+	cancel()
+	wg.Wait()
+	if errr != nil {
+		log.Fatal(errr)
 	}
 }
 
-func logOutput(str string) {
-	timestamp := time.Now().UTC().Format("2006-01-02T15:04:05.000Z")
-	log.Printf("%s: %s\n", timestamp, str)
+func logOutput(str string, ctx context.Context, wg *sync.WaitGroup) {
+	defer wg.Done()
+	ticker := time.NewTicker(5 * time.Second)
+	defer ticker.Stop()
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case <-ticker.C:
+			timestamp := time.Now().UTC().Format("2006-01-02T15:04:05.000Z")
+			temp := fmt.Sprintf("%s: %s\n", timestamp, str)
+			log.Println(temp)
+			randomStrLog = temp
+		}
+	}
+
 }
 
 func generateUUID() string {

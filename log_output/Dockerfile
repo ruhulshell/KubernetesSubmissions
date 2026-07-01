@@ -17,4 +17,6 @@ USER appuser
 
 COPY --from=builder /usr/local/bin/app /app
 
+EXPOSE 3070
+
 CMD ["/app"]
