@@ -20,6 +20,11 @@
 
 - [1.9](https://github.com/ruhulshell/KubernetesSubmissions/tree/1.9) - ping-pong
 
+- [1.10](https://github.com/ruhulshell/KubernetesSubmissions/tree/1.10/log_output) - log_output
+
+
+
+
 
 
 
