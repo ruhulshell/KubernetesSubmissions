@@ -1,17 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: logoutput-dep
+  name: log-dep
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: logoutput
+      app: logs
   template:
     metadata:
       labels:
-        app: logoutput
+        app: logs
     spec:
+      volumes: 
+        - name: shared-log
+          emptyDir: {}
       containers:
-        - name: logoutput
-          image: ruhulaminjr/logoutput1
+        - name: log-writer
+          image: ruhulaminjr/log_writer:latest
+          env:
+            - name: LOG_DIRECTORY
+              value: "/usr/src/app/files" 
+          volumeMounts: 
+            - name: shared-log          
+              mountPath: /usr/src/app/files
+
+        - name: log-response
+          image: ruhulaminjr/log_response:latest
+          env:
+            - name: LOG_DIRECTORY
+              value: "/usr/src/app/files" 
+          volumeMounts: 
+            - name: shared-log
+              mountPath: /usr/src/app/files

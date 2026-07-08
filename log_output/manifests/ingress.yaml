@@ -13,10 +13,3 @@ spec:
             name: logoutput-svc
             port:
               number: 4545
-      - path: /pingpong
-        pathType: Prefix
-        backend:
-          service:
-            name: pingpong-svc
-            port:
-              number: 4545
