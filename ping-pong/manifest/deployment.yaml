@@ -12,6 +12,18 @@ spec:
       labels:
         app: pingpong
     spec:
+      volumes: 
+        - name: shared-log
+          persistentVolumeClaim:
+            claimName: log-claim # Make sure this matches your PVC metadata.name exactly!
       containers:
         - name: pingpong
           image: ruhulaminjr/pingpong:latest
+          env:
+            - name: LOG_DIRECTORY
+              value: "/usr/src/app/files"
+          volumeMounts:
+            - name: shared-log
+              mountPath: /usr/src/app/files
+      nodeSelector:
+        kubernetes.io/hostname: k3d-k3s-default-agent-0

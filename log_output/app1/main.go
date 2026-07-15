@@ -15,6 +15,7 @@ func main() {
 	}
 
 	filePath := filepath.Join(logDir, "app.log")
+	counterFilePath := filepath.Join(logDir, "counter.log")
 
 	err := os.MkdirAll(logDir, 0755)
 	if err != nil {
@@ -33,10 +34,15 @@ func main() {
 	defer f.Close()
 
 	for {
+		data, err := os.ReadFile(counterFilePath)
+		if err != nil {
+			fmt.Printf("Failed to read file: %v\n", err)
+			return
+		}
 		timestamp := time.Now().UTC().Format("2006-01-02T15:04:05.000Z")
-		logLine := fmt.Sprintf("%s: %s\n", timestamp, randomStr)
+		logLine := fmt.Sprintf("%s: %s Ping / Pongs: %s\n", timestamp, randomStr, string(data))
 
-		_, err := f.WriteString(logLine)
+		_, err = f.WriteString(logLine)
 		if err != nil {
 			fmt.Printf("Writer: Failed to write to file: %v\n", err)
 		}
