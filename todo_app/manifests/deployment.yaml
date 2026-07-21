@@ -12,9 +12,18 @@ spec:
       labels:
         app: todoapp
     spec:
+      volumes:
+        - name: shared-log
+          persistentVolumeClaim:
+            claimName: log-claim
       containers:
         - name: todoapp
-          image: ruhulaminjr/todoapp
+          image: ruhulaminjr/todoapp:latest
           env:
             - name: PORT
               value: "6060"
+            - name: IMG_DIRECTORY
+              value: "/usr/src/app/files"
+          volumeMounts:
+            - name: shared-log
+              mountPath: /usr/src/app/files
