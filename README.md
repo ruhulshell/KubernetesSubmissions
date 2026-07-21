@@ -24,6 +24,10 @@
 
 - [1.11](https://github.com/ruhulshell/KubernetesSubmissions/tree/1.11) - Persisting data
 
+- [1.12](https://github.com/ruhulshell/KubernetesSubmissions/tree/1.12/todo_app) - todo_app
+
+
+
 
 
 
